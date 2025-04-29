@@ -18,10 +18,26 @@
         .red-text {
             color: red; /* Màu chữ đỏ */
             font-size: 24px; /* Kích thước chữ lớn hơn */
+            text-align: center; /* Căn giữa chữ */
         }
         .green-text {
             color: lime; /* Màu chữ xanh lá */
             font-size: 20px; /* Kích thước chữ nhỏ hơn */
+            text-align: center; /* Căn giữa chữ */
+        }
+        button {
+            margin-top: 20px; /* Khoảng cách giữa văn bản và nút */
+            padding: 10px 20px; /* Padding cho nút */
+            background-color: lime; /* Màu nền nút */
+            color: black; /* Màu chữ nút */
+            border: none; /* Không viền */
+            border-radius: 5px; /* Bo tròn góc nút */
+            font-size: 16px; /* Kích thước chữ nút */
+            cursor: pointer; /* Đổi con trỏ chuột khi hover */
+            transition: background-color 0.3s; /* Hiệu ứng chuyển màu nền */
+        }
+        button:hover {
+            background-color: darkgreen; /* Màu nền khi hover */
         }
     </style>
 </head>
@@ -29,6 +45,9 @@
 
     <div class="red-text">Dịch vụ đang được phát triển vui lòng chờ đợi<br>Bảo trì sẽ sớm hoàn tất</div>
     <div class="green-text">HTeam Service</div>
+    
+    <!-- Nút làm mới -->
+    <button onclick="location.reload();">Làm mới</button>
 
 </body>
 </html>
