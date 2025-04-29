@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        .container {
+            border: 2px solid #007BFF;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: 100%;
+            max-width: 600px;
+            box-sizing: border-box;
+            border-radius: 10px;
+            background-color: #e0e0e0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+        }
+        .logo {
+            margin-right: 20px;
+            width: 100px;
+            height: 100px;
+        }
+        .text {
+            flex-grow: 1;
+            text-align: center;
+            color: #333;
+        }
+        h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+        p {
+            margin: 5px 0 0;
+            color: #666;
+        }
+        #server-status {
+            color: #28a745;
+        }
+        .hack-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 400px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px auto;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .result-container {
+            border: 2px solid #28a745;
+            background-color: #d4edda;
+            border-radius: 5px;
+            padding: 20px;
+            margin-top: 15px;
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .type-container {
+            border: 2px solid #007BFF;
+            background-color: #e6f0ff;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            text-align: center;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .support-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 400px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px auto;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        /* Khung Setting */
+        .settings-container {
+            border: 2px solid #007BFF;
+            background-color: #e6f0ff;
+            border-radius: 5px;
+            padding: 20px;
+            margin-top: 20px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .settings-option {
+            margin: 10px 0;
+        }
+        .time-date-display {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .history-container {
+            margin-top: 20px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <img class="logo" src="https://i.imgur.com/tYf5Mxj.jpeg" alt="Logo">
+    <div class="text">
+        <h1>TOOL XỔ SỐ</h1>
+        <p>Created by TSTeam</p>
+    </div>
+</div>
+
+<div class="hack-container">
+    <div class="text">
+        <h1>Máy chủ</h1>
+        <p id="server-status">Đã kết nối</p>
+        <h1>Kiểu</h1>
+        <div class="type-container">
+            <p id="analysis-status">Phân Tích</p>
+        </div>
+        <h1>Kết quả</h1>
+        <div class="result-container">
+            <p id="result">-----</p>
+        </div>
+    </div>
+    <button id="start-button">Bắt đầu Hack</button>
+</div>
+
+<!-- Khung Hỗ Trợ -->
+<div class="support-container">
+    <p>Mọi vấn đề cần hỗ trợ, liên hệ Tele</p>
+    <a href="https://t.me/@thaysangluxury" target="_blank">
+        <button>Telegram</button>
+    </a>
+</div>
+
+<!-- Khung Setting -->
+<div class="settings-container">
+    <h1>Setting</h1>
+    <div class="settings-option">
+        <input type="checkbox" id="alwaysOn"> Cho màn hình sáng
+    </div>
+    <div class="settings-option">
+        <input type="checkbox" id="showTime"> Hiển thị thời gian
+    </div>
+    <div class="settings-option">
+        <input type="checkbox" id="showDate"> Hiển thị lịch
+    </div>
+    <div class="settings-option">
+        <input type="checkbox" id="mode5Numbers"> Chế độ 5 số
+    </div>
+    <div class="settings-option">
+        <input type="checkbox" id="mode6Numbers"> Chế độ 6 số
+    </div>
+    <div class="settings-option">
+        <input type="checkbox" id="historyTool"> Lịch sử Tool
+    </div>
+    <div class="settings-option">
+        <input type="checkbox" id="doNotDisturb"> Chế độ Chống làm phiền
+    </div>
+    <div class="settings-option">
+        <input type="checkbox" id="refreshPage"> Làm mới trang
+    </div>
+    <div class="time-date-display">
+        <div id="currentTime"></div>
+        <div id="currentDate"></div>
+    </div>
+</div>
+
+<!-- Lịch sử kết quả -->
+<div class="history-container" id="historyContainer" style="display: none;">
+    <h2>Lịch sử Kết quả</h2>
+    <ul id="historyList"></ul>
+</div>
+
+<script>
+    let wakeLock = null;
+    let doNotDisturbMode = false;
+
+    // Xử lý cho checkbox "Cho màn hình sáng"
+    const alwaysOnCheckbox = document.getElementById('alwaysOn');
+    alwaysOnCheckbox.addEventListener('change', async function () {
+        if (this.checked) {
+            try {
+                wakeLock = await navigator.wakeLock.request('screen');
+                console.log('Màn hình luôn sáng');
+            } catch (err) {
+                console.error(`${err.name}, ${err.message}`);
+            }
+        } else {
+            if (wakeLock) {
+                await wakeLock.release();
+                console.log('Màn hình không còn sáng');
+                wakeLock = null;
+            }
+        }
+    });
+
+    // Xử lý cho thời gian và ngày
+    const showTimeCheckbox = document.getElementById('showTime');
+    const showDateCheckbox = document.getElementById('showDate');
+    const timeDisplay = document.getElementById('currentTime');
+    const dateDisplay = document.getElementById('currentDate');
+
+    // Cập nhật giờ và ngày
+    function updateTime() {
+        const now = new Date();
+        timeDisplay.innerHTML = `Thời gian: ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
+    }
+
+    function updateDate() {
+        const now = new Date();
+        dateDisplay.innerHTML = `Ngày: ${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()}`;
+    }
+
+    showTimeCheckbox.addEventListener('change', function () {
+        if (this.checked) {
+            updateTime();
+            setInterval(updateTime, 1000);
+        } else {
+            timeDisplay.innerHTML = '';
+        }
+    });
+    
+    showDateCheckbox.addEventListener('change', function () {
+        if (this.checked) {
+            updateDate();
+            setInterval(updateDate, 1000);
+        } else {
+            dateDisplay.innerHTML = '';
+        }
+    });
+
+    // Xử lý cho chế độ 5 số và 6 số
+    const mode5Checkbox = document.getElementById('mode5Numbers');
+    const mode6Checkbox = document.getElementById('mode6Numbers');
+    
+    const resultsHistory = [];
+    const historyList = document.getElementById('historyList');
+    const historyContainer = document.getElementById('historyContainer');
+
+    document.getElementById('start-button').addEventListener('click', function() {
+        // Nếu chế độ chống làm phiền được bật, không hiển thị thông báo
+        if (doNotDisturbMode) {
+            console.log('Chế độ chống làm phiền được kích hoạt. Không có thông báo.');
+        } else {
+            document.getElementById('analysis-status').innerHTML = 'Đang phân tích';
+        }
+
+        let numbers = [];
+        while (numbers.length < 7) {
+            let num = Math.floor(Math.random() * 10);
+            if (!numbers.includes(num)) {
+                numbers.push(num);
+            }
+        }
+
+        numbers.sort((a, b) => a - b);
+        let result = numbers.join(' ');
+
+        setTimeout(() => {
+            // Nếu chế độ chống làm phiền không được bật
+            if (!doNotDisturbMode) {
+                document.getElementById('analysis-status').innerHTML = 'Phân tích thành công';
+            }
+
+            // Nếu chế độ 5 số được chọn
+            if (mode5Checkbox.checked) {
+                result = numbers.slice(0, 5).join(' '); // Lấy 5 số nếu checkbox được chọn
+            }
+            // Nếu chế độ 6 số được chọn
+            if (mode6Checkbox.checked) {
+                result = numbers.slice(0, 6).join(' '); // Lấy 6 số nếu checkbox được chọn
+            }
+            document.getElementById('result').innerHTML = result;
+
+            // Lưu lịch sử kết quả
+            resultsHistory.unshift(result);
+            if (resultsHistory.length > 10) resultsHistory.pop(); // Giới hạn 10 kết quả
+
+            // Hiển thị lịch sử tool nếu checkbox được chọn
+            if (document.getElementById('historyTool').checked) {
+                historyList.innerHTML = '';
+                resultsHistory.forEach(item => {
+                    const li = document.createElement('li');
+                    li.innerText = item;
+                    historyList.appendChild(li);
+                });
+                historyContainer.style.display = 'block'; // Hiển thị khung lịch sử
+            } else {
+                historyContainer.style.display = 'none'; // Ẩn khung lịch sử
+            }
+        }, 2000);
+    });
+
+    // Xử lý cho checkbox Chống làm phiền
+    const doNotDisturbCheckbox = document.getElementById('doNotDisturb');
+    doNotDisturbCheckbox.addEventListener('change', function () {
+        doNotDisturbMode = this.checked;
+        if (doNotDisturbMode) {
+            alert("Chế độ Chống làm phiền đã được kích hoạt! Bạn sẽ không nhận thông báo.");
+        } else {
+            alert("Chế độ Chống làm phiền đã được tắt!");
+        }
+    });
+
+    // Xử lý cho checkbox Làm mới trang
+    const refreshPageCheckbox = document.getElementById('refreshPage');
+    refreshPageCheckbox.addEventListener('change', function () {
+        if (this.checked) {
+            location.reload(); // Làm mới trang
+        } else {
+            // Nếu không làm mới, bỏ qua
+        }
+    });
+</script>
+
+</body>
+</html>
