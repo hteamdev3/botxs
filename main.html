@@ -125,6 +125,14 @@
             margin-top: 20px;
             text-align: left;
         }
+        #audio-controls {
+            display: none; /* Ẩn thanh điều khiển ban đầu */
+            margin-top: 10px;
+        }
+        /* Style các nút điều khiển âm thanh */
+        #audio-controls button {
+            margin: 5px;
+        }
     </style>
 </head>
 <body>
@@ -188,6 +196,15 @@
     <div class="settings-option">
         <input type="checkbox" id="refreshPage"> Làm mới trang
     </div>
+    <div class="settings-option">
+        <input type="checkbox" id="playMusic"> Phát nhạc nền
+    </div>
+    <div id="audio-controls">
+        <button id="prev">Lùi lại</button>
+        <button id="playPause">Play</button>
+        <button id="next">Tiếp theo</button>
+        <input type="range" id="volume" min="0" max="100" value="50">
+    </div>
     <div class="time-date-display">
         <div id="currentTime"></div>
         <div id="currentDate"></div>
@@ -199,6 +216,8 @@
     <h2>Lịch sử Kết quả</h2>
     <ul id="historyList"></ul>
 </div>
+
+<audio id="audio" loop></audio>
 
 <script>
     let wakeLock = null;
@@ -229,7 +248,6 @@
     const timeDisplay = document.getElementById('currentTime');
     const dateDisplay = document.getElementById('currentDate');
 
-    // Cập nhật giờ và ngày
     function updateTime() {
         const now = new Date();
         timeDisplay.innerHTML = `Thời gian: ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
@@ -248,7 +266,7 @@
             timeDisplay.innerHTML = '';
         }
     });
-    
+
     showDateCheckbox.addEventListener('change', function () {
         if (this.checked) {
             updateDate();
@@ -261,13 +279,12 @@
     // Xử lý cho chế độ 5 số và 6 số
     const mode5Checkbox = document.getElementById('mode5Numbers');
     const mode6Checkbox = document.getElementById('mode6Numbers');
-    
+
     const resultsHistory = [];
     const historyList = document.getElementById('historyList');
     const historyContainer = document.getElementById('historyContainer');
 
     document.getElementById('start-button').addEventListener('click', function() {
-        // Nếu chế độ chống làm phiền được bật, không hiển thị thông báo
         if (doNotDisturbMode) {
             console.log('Chế độ chống làm phiền được kích hoạt. Không có thông báo.');
         } else {
@@ -286,26 +303,21 @@
         let result = numbers.join(' ');
 
         setTimeout(() => {
-            // Nếu chế độ chống làm phiền không được bật
             if (!doNotDisturbMode) {
                 document.getElementById('analysis-status').innerHTML = 'Phân tích thành công';
             }
 
-            // Nếu chế độ 5 số được chọn
             if (mode5Checkbox.checked) {
-                result = numbers.slice(0, 5).join(' '); // Lấy 5 số nếu checkbox được chọn
+                result = numbers.slice(0, 5).join(' ');
             }
-            // Nếu chế độ 6 số được chọn
             if (mode6Checkbox.checked) {
-                result = numbers.slice(0, 6).join(' '); // Lấy 6 số nếu checkbox được chọn
+                result = numbers.slice(0, 6).join(' ');
             }
             document.getElementById('result').innerHTML = result;
 
-            // Lưu lịch sử kết quả
             resultsHistory.unshift(result);
-            if (resultsHistory.length > 10) resultsHistory.pop(); // Giới hạn 10 kết quả
+            if (resultsHistory.length > 10) resultsHistory.pop();
 
-            // Hiển thị lịch sử tool nếu checkbox được chọn
             if (document.getElementById('historyTool').checked) {
                 historyList.innerHTML = '';
                 resultsHistory.forEach(item => {
@@ -313,9 +325,9 @@
                     li.innerText = item;
                     historyList.appendChild(li);
                 });
-                historyContainer.style.display = 'block'; // Hiển thị khung lịch sử
+                historyContainer.style.display = 'block'; 
             } else {
-                historyContainer.style.display = 'none'; // Ẩn khung lịch sử
+                historyContainer.style.display = 'none'; 
             }
         }, 2000);
     });
@@ -335,12 +347,79 @@
     const refreshPageCheckbox = document.getElementById('refreshPage');
     refreshPageCheckbox.addEventListener('change', function () {
         if (this.checked) {
-            location.reload(); // Làm mới trang
-        } else {
-            // Nếu không làm mới, bỏ qua
+            location.reload();
         }
+    });
+
+    // Xử lý nhạc nền
+    const playMusicCheckbox = document.getElementById('playMusic');
+    const audio = document.getElementById('audio');
+    const audioControls = document.getElementById('audio-controls');
+    const playPauseButton = document.getElementById('playPause');
+    const volumeControl = document.getElementById('volume');
+
+    let musicList = [];
+    let currentTrackIndex = 0;
+
+    // Đọc danh sách nhạc từ nhac.txt
+    async function loadMusicList() {
+        const response = await fetch('nhac.txt');
+        const text = await response.text();
+        musicList = text.split('\n').map(line => line.trim()).filter(line => line);
+    }
+    
+    loadMusicList();
+
+    playMusicCheckbox.addEventListener('change', function() {
+        if (this.checked) {
+            if (musicList.length > 0) {
+                audio.src = musicList[currentTrackIndex];
+                audio.play();
+                audioControls.style.display = 'block'; // Hiển thị thanh điều khiển
+            }
+        } else {
+            audio.pause();
+            audioControls.style.display = 'none'; // Ẩn thanh điều khiển
+        }
+    });
+
+    playPauseButton.addEventListener('click', function() {
+        if (audio.paused) {
+            audio.play();
+            playPauseButton.textContent = 'Pause';
+        } else {
+            audio.pause();
+            playPauseButton.textContent = 'Play';
+        }
+    });
+
+    volumeControl.addEventListener('input', function() {
+        audio.volume = this.value / 100; // Điều chỉnh âm lượng
+    });
+
+    document.getElementById('prev').addEventListener('click', function() {
+        if (musicList.length > 0) {
+            currentTrackIndex = (currentTrackIndex - 1 + musicList.length) % musicList.length; // Lùi lại
+            audio.src = musicList[currentTrackIndex];
+            audio.play();
+        }
+    });
+
+    document.getElementById('next').addEventListener('click', function() {
+        if (musicList.length > 0) {
+            currentTrackIndex = (currentTrackIndex + 1) % musicList.length; // Tiếp theo
+            audio.src = musicList[currentTrackIndex];
+            audio.play();
+        }
+    });
+
+    audio.addEventListener('ended', function() {
+        currentTrackIndex = (currentTrackIndex + 1) % musicList.length; // Tự động chơi bài tiếp theo
+        audio.src = musicList[currentTrackIndex];
+        audio.play();
     });
 </script>
 
 </body>
-</html>
+    </html>
+    
