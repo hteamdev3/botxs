@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tool Xổ Số</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #eaeaea; /* Nền nhẹ nhàng */
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            width: 90%; /* Chiều rộng khung */
+            max-width: 600px; /* Chiều rộng tối đa */
+        }
+        .box {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        #introText {
+            font-size: 20px;
+            color: #333;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        #inputSection {
+            padding: 30px;
+            background-color: #f5f5f5; /* Nền khung nhập key */
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        #apikey {
+            padding: 10px;
+            width: 80%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-size: 16px;
+            transition: border 0.3s, box-shadow 0.3s;
+        }
+        #apikey:focus {
+            border: 1px solid #0088cc; /* Màu viền khi focus */
+            box-shadow: 0 0 5px rgba(0, 136, 204, 0.5);
+            outline: none; /* Loại bỏ viền mặc định */
+        }
+        #submitKey {
+            padding: 10px 20px;
+            background-color: #0088cc; /* Nền button */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        #submitKey:hover {
+            background-color: #0077b3; /* Đổi màu khi hover */
+        }
+        #loading {
+            margin-top: 10px;
+            color: #ff6f61;
+            font-weight: bold;
+        }
+        #contactSection {
+            background-color: rgba(200, 200, 200, 0.7); /* Nền xám mờ */
+        }
+        #telegramButton {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #0088cc; /* Màu Telegram */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #telegramButton:hover {
+            background-color: #0077b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="box" id="introText">Bot created and setup by STTeam<br>Version: 1.2</div>
+    
+    <div class="box" id="inputSection">
+        <div id="header">Nhập Key Để Truy Cập</div>
+        <input type="text" id="apikey" placeholder="Nhập khóa của bạn" />
+        <button id="submitKey">Tiếp tục</button>
+        <div id="loading" style="display: none;"></div>
+    </div>
+
+    <div class="box" id="contactSection">
+        <p>Mua key vui lòng liên hệ Tele</p>
+        <a href="https://t.me/@thaysangluxury">
+            <button id="telegramButton">Telegram</button>
+        </a>
+    </div>
+</div>
+
+<script>
+    let validKeys = [];
+
+    async function loadValidKeys() {
+        const response = await fetch('https://docs.google.com/document/d/1qweC2xEiNSg13xywi_l8GhrSxXFwdMfzvdRL81KmMFA/export?format=txt');
+        const text = await response.text();
+        validKeys = text.split(/\s+/).filter(word => word.length >= 5);
+    }
+
+    document.getElementById('submitKey').onclick = async function () {
+        const loadingElement = document.getElementById('loading');
+        loadingElement.style.display = 'block';
+        loadingElement.innerText = 'Đang kiểm tra...';
+
+        await loadValidKeys();
+
+        setTimeout(() => {
+            loadingElement.style.display = 'none';
+            const apikeyInput = document.getElementById('apikey').value;
+
+            if (validKeys.includes(apikeyInput)) {
+                alert('Key đúng! Chuyển hướng tới trang chính.');
+                window.location.href = "main.html"; // Chuyển hướng đến main.html
+            } else {
+                alert('Key sai! Vui lòng thử lại.');
+            }
+        }, 2000);
+    };
+</script>
+
+</body>
+</html>
