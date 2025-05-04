@@ -19,17 +19,49 @@
             width: 100%; /* Đặt chiều rộng 100% */
             height: auto; /* Giữ tỷ lệ khung hình */
             transform: translate(-50%, -50%);
+            cursor: pointer; /* Thay đổi con trỏ khi rê chuột vào ảnh */
+        }
+        button {
+            position: absolute;
+            top: 20px; /* Vị trí của nút */
+            right: 20px; /* Vị trí của nút */
+            opacity: 0; /* Ẩn nút */
+            transition: opacity 0.5s; /* Hiệu ứng mờ khi rê chuột */
+        }
+        button:hover {
+            opacity: 1; /* Hiện nút khi rê chuột lên */
         }
     </style>
 </head>
 <body>
     <!-- Chèn ảnh từ link -->
-    <img src="https://i.imgur.com/5Q0mhS8.jpeg" alt="Hình ảnh">
+    <img id="image" src="https://i.imgur.com/5Q0mhS8.jpeg" alt="Hình ảnh">
 
     <!-- Chèn âm thanh -->
-    <audio autoplay loop muted>
+    <audio id="audio" loop muted>
         <source src="horror.mp3" type="audio/mpeg">
         Trình duyệt của bạn không hỗ trợ thẻ audio.
     </audio>
+
+    <!-- Nút để ngừng âm thanh -->
+    <button id="stopBtn">Ngừng Nhạc</button>
+
+    <script>
+        // Lấy biến cho âm thanh và nút
+        var audio = document.getElementById('audio');
+        var stopBtn = document.getElementById('stopBtn');
+        var image = document.getElementById('image');
+
+        // Khi chạm vào ảnh, mở âm thanh
+        image.onclick = function() {
+            audio.muted = false; // Bỏ tắt tiếng
+            audio.play(); // Phát âm thanh
+        };
+
+        // Thêm sự kiện để dừng âm thanh khi nhấn nút
+        stopBtn.onclick = function() {
+            audio.pause(); // Dừng âm thanh
+        };
+    </script>
 </body>
 </html>
