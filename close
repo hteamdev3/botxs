@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ảnh và Âm thanh</title>
+</head>
+<body>
+    <!-- Chèn ảnh từ link -->
+    <img src="https://i.imgur.com/5Q0mhS8.jpeg" alt="Hình ảnh" style="max-width: 100%; height: auto;">
+
+    <!-- Chèn âm thanh -->
+    <audio controls>
+        <source src="horror.mp3" type="audio/mpeg">
+        Trình duyệt của bạn không hỗ trợ thẻ audio.
+    </audio>
+</body>
+</html>
